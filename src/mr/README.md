@@ -36,6 +36,18 @@ This project implements a MapReduce distributed system, including worker nodes t
 
 ### Message Types
 
+- **Types**:
+
+  - **RequestTask**: Worker requests a task from the coordinator.
+  - **AssignMapTask**: Coordinator assigns a map task to the worker.
+  - **AssignReduceTask**: Coordinator assigns a reduce task to the worker.
+  - **SucceedMapTask**: Worker reports a successful map task.
+  - **FailMapTask**: Worker reports a failed map task.
+  - **SucceedReduceTask**: Worker reports a successful reduce task.
+  - **FailReduceTask**: Worker reports a failed reduce task.
+  - **ShutdownWorker**: Coordinator tells the worker to shut down.
+  - **HoldWorker**: Coordinator tells the worker to hold on.
+
 - **Worker Requests**:
   - Workers request tasks from the coordinator.
   - Workers return map and reduce results.
