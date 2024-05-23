@@ -6,6 +6,15 @@ This project implements a MapReduce distributed system, including worker nodes t
 
 ![MapReduce System Architecture](diagram.png)
 
+### Execution Flow
+
+1. Splits input files into M Map tasks, where in our case each input file is a single map task.
+2. Initializes the program across a cluster of nodes and one of which is the coordinator.
+3. The coordinator assigns Map tasks to worker nodes, which read the input content and pass it to the user-defined map function and in the end write the intermediate key-value pairs into local disk.
+4. These key-value pairs on the local disk are partitioned into R parts using `hash(key) mod R` and a reduce worker will be notified by the coordinator about the address of the intermediate data and read them using remote procedure calls.
+5. After reading the data, the reduce worker sorts the data via its key and passes the key and its corresponding set of values to the reduce function and append the output to the final output file. **[If the amount of intermediate data is too large to fit in memory while sorting, an external sort will be used.]**
+6. When all map and reduce tasks have been completed successfully, the coordinator will notify the workers to shut down.
+
 ## Features
 
 ### Map Phase
